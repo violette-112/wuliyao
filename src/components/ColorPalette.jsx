@@ -1,22 +1,23 @@
 /**
  * 颜色色板列表
  * 展示图纸中使用的所有颜色
- * 点击复制HEX，hover高亮
+ * 点击复制HEX，hover高亮（复制兼容手机 HTTP 非安全上下文）
  */
 import { useState, useCallback } from "react";
+import { copyToClipboard } from "../lib/clipboard";
 
 export default function ColorPalette({ usedColors, onColorHover }) {
   const [copied, setCopied] = useState(null);
 
-  const handleCopy = useCallback(
-    (color) => {
-      navigator.clipboard.writeText(color.hex).then(() => {
-        setCopied(color.coord);
-        setTimeout(() => setCopied(null), 1500);
-      });
-    },
-    []
-  );
+  const handleCopy = useCallback(async (color) => {
+    try {
+      await copyToClipboard(color.hex);
+      setCopied(color.coord);
+      setTimeout(() => setCopied(null), 1500);
+    } catch (err) {
+      alert(`复制失败：${err?.message || "浏览器不支持"}`);
+    }
+  }, []);
 
   if (!usedColors || usedColors.length === 0) {
     return null;
@@ -31,10 +32,11 @@ export default function ColorPalette({ usedColors, onColorHover }) {
         {usedColors.map((color) => (
           <button
             key={color.coord}
+            type="button"
             onClick={() => handleCopy(color)}
             onMouseEnter={() => onColorHover?.(color)}
             onMouseLeave={() => onColorHover?.(null)}
-            className="group flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-2 py-1.5 hover:border-game-green hover:shadow-sm transition-all"
+            className="group flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-2 py-1.5 hover:border-game-green hover:shadow-sm transition-all active:scale-95"
             title={`${color.hex} - 点击复制`}
           >
             <div
