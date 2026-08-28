@@ -183,7 +183,8 @@ export default function TemplateSelector({ selected, onSelect }) {
         <span>🎽</span> 服装模板
       </h3>
 
-      <div className="grid grid-cols-4 gap-2 mb-4">
+      {/* 服装分类 Tab：手机 2 列，sm 以上 4 列，避免小屏 4 列挤压 */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 mb-4">
         {TEMPLATE_CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.id;
           return (
@@ -191,7 +192,7 @@ export default function TemplateSelector({ selected, onSelect }) {
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`
-                flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200
+                flex flex-col items-center p-1.5 sm:p-2 rounded-lg border-2 transition-all duration-200
                 ${
                   isActive
                     ? "border-game-green bg-green-50 shadow-md"
@@ -199,16 +200,19 @@ export default function TemplateSelector({ selected, onSelect }) {
                 }
               `}
             >
-              <div className="w-10 h-10 mb-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mb-1">
                 {CATEGORY_ICONS[cat.id]}
               </div>
-              <span className="text-xs font-bold text-gray-700">{cat.name}</span>
+              <span className="text-[10px] sm:text-xs font-bold text-gray-700 leading-tight text-center">
+                {cat.name}
+              </span>
             </button>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+      {/* 具体模板卡片：手机 2 列 md 4 列，间距收缩适配 */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5 sm:gap-2">
         {currentTemplates.map((template) => {
           const isSelected = selected.id === template.id;
           return (
@@ -216,7 +220,7 @@ export default function TemplateSelector({ selected, onSelect }) {
               key={template.id}
               onClick={() => onSelect(template)}
               className={`
-                flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200
+                flex flex-col items-center p-1.5 sm:p-2 rounded-lg border-2 transition-all duration-200 min-h-[100px] sm:min-h-0
                 ${
                   isSelected
                     ? "border-game-green bg-green-50 shadow-md"
@@ -227,10 +231,10 @@ export default function TemplateSelector({ selected, onSelect }) {
               <div className="w-full aspect-square rounded mb-1 overflow-hidden bg-gray-50 p-1">
                 {TEMPLATE_ICONS[template.id]}
               </div>
-              <span className="text-xs font-bold text-gray-700">
+              <span className="text-[11px] sm:text-xs font-bold text-gray-700 leading-tight text-center">
                 {template.name}
               </span>
-              <span className="text-[10px] text-gray-400 mt-0.5 leading-tight text-center">
+              <span className="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 leading-tight text-center line-clamp-2">
                 {template.description}
               </span>
             </button>

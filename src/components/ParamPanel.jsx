@@ -24,7 +24,7 @@ export default function ParamPanel({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 space-y-6">
+    <div className="bg-white rounded-2xl shadow-md p-4 sm:p-5 space-y-5 sm:space-y-6">
       {/* 模板选择器 */}
       <TemplateSelector selected={template} onSelect={onTemplateChange} />
 
@@ -88,7 +88,7 @@ export default function ParamPanel({
         onClick={onGenerate}
         disabled={!hasImage}
         className={`
-          w-full py-3 rounded-xl font-bold text-sm transition-all
+          w-full py-2.5 sm:py-3 rounded-xl font-bold text-sm transition-all
           ${
             hasImage
               ? "bg-game-green text-white hover:bg-green-600 shadow-md active:scale-95"

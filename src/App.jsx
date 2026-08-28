@@ -291,10 +291,10 @@ function App() {
       <Header />
 
       {/* 主区域 */}
-      <main className="max-w-7xl mx-auto px-4 pb-12">
-        <div className="flex flex-col md:flex-row gap-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 pb-8 sm:pb-12">
+        <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
           {/* 左栏 */}
-          <div className="w-full md:w-[35%] space-y-6">
+          <div className="w-full md:w-[35%] space-y-4 sm:space-y-6">
             {/* 上传区 */}
             <UploadZone onUpload={handleUpload} />
 
@@ -304,7 +304,7 @@ function App() {
             )}
 
             {image && !showCrop && (
-              <div className="bg-white rounded-2xl shadow-md p-4">
+              <div className="bg-white rounded-2xl shadow-md p-3 sm:p-4">
                 <h3 className="text-sm font-bold text-gray-700 mb-2">
                   原图预览
                 </h3>
@@ -328,9 +328,9 @@ function App() {
           </div>
 
           {/* 右栏 */}
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-4 sm:space-y-6">
             {/* 模板标签 */}
-            <div className="bg-white rounded-2xl shadow-md px-5 py-3 flex items-center justify-between">
+            <div className="bg-white rounded-2xl shadow-md px-4 sm:px-5 py-3 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-gray-700">
                   当前模板：
@@ -480,7 +480,8 @@ function App() {
             )}
 
             {/* 图纸画布 —— 始终渲染（有结果显示图案，无结果显示默认模板） */}
-            <div className="bg-white rounded-2xl shadow-md p-5 flex flex-col items-center">
+            {/* 画布容器加 max-w-full overflow-x-auto：iPhone SE 375px < 画布 384px 时只在这里出现横向滚动条，不破坏整页布局 */}
+            <div className="bg-white rounded-2xl shadow-md p-4 sm:p-5 flex flex-col items-center w-full max-w-full overflow-x-auto">
               <PatternCanvas
                 ref={canvasRef}
                 result={result}
